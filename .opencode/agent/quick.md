@@ -1,6 +1,6 @@
 ---
 description: Handles simple edits, refactors, and Q&A tasks
-model: qwen/qwen3-vl-32b-instruct
+model: openrouter/qwen/qwen3-coder-flash
 mode: subagent
 ---
 

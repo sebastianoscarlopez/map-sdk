@@ -1,32 +1,35 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "model": "qwen/qwen3.7-max",
-  "small_model": "qwen/qwen3-vl-32b-instruct",
+  "model": "openrouter/qwen/qwen3.7-max",
+  "small_model": "openrouter/qwen/qwen3-coder-flash",
   "default_agent": "orchestrator",
   "instructions": ["AGENTS.md"],
+  "permission": {
+    "edit": "allow"
+  },
   "agent": {
     "build": {
-      "model": "qwen/qwen3.7-max",
-      "description": "Handles complex implementation tasks"
+      "model": "openrouter/qwen/qwen3.7-max",
+      "description": "Handles complex implementation tasks — WASM, GL, monorepo plumbing"
     },
     "plan": {
-      "model": "qwen/qwen3.7-max",
-      "description": "Handles architectural planning and complex decision making"
+      "model": "openrouter/qwen/qwen3.7-max",
+      "description": "Architectural decisions, system design, trade-off analysis"
     },
     "explore": {
-      "model": "qwen/qwen3-vl-32b-instruct",
-      "description": "Handles codebase exploration and navigation tasks"
+      "model": "openrouter/qwen/qwen3-coder-flash",
+      "description": "Codebase exploration, file discovery, pattern search"
     },
     "visual": {
-      "model": "qwen/qwen3-vl-32b-instruct",
-      "description": "Handles visual tasks like reviewing playground screenshots and debugging map rendering"
+      "model": "openrouter/qwen/qwen3-vl-32b-instruct",
+      "description": "Screenshot review, map rendering debugging, visual QA"
     },
     "quick": {
-      "model": "qwen/qwen3-vl-32b-instruct",
-      "description": "Handles simple edits, refactors, and Q&A tasks"
+      "model": "openrouter/qwen/qwen3-coder-flash",
+      "description": "Simple edits, refactors, documentation, Q&A"
     },
     "orchestrator": {
-      "model": "qwen/qwen3.7-max",
+      "model": "openrouter/qwen/qwen3.7-max",
       "description": "Coordinates multi-step work across specialized agents, breaks down complex tasks, and routes work to the right agent"
     }
   }

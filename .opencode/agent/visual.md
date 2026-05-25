@@ -1,6 +1,6 @@
 ---
 description: Handles visual tasks like reviewing playground screenshots and debugging map rendering
-model: qwen/qwen3-vl-32b-instruct
+model: openrouter/qwen/qwen3-vl-32b-instruct
 mode: subagent
 ---
 

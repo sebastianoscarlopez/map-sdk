@@ -22,6 +22,15 @@ This repo contains only `ARCHITECTURE.md` — a vision/roadmap document. **No co
 - **WASM cannot call GL** — all WebGL2 draw calls must go through JavaScript
 - **State management**: `@preact/signals` for consumer-facing state, plain mutable for hot-path internals, event emitter for notifications
 
+### Verification rule
+Every code change must be verified before being declared done:
+1. Run `pnpm lint` — fix all errors
+2. Run `pnpm typecheck` — fix all type errors
+3. Run `pnpm test` — all tests must pass
+4. Run `pnpm build` — must succeed without errors
+
+If any step fails, fix the issue before proceeding. Never declare a task complete with failing checks.
+
 ### Key reference
 - `ARCHITECTURE.md` — full architecture vision, data flows, error handling, and implementation phases
 
@@ -32,6 +41,6 @@ This repo contains only `ARCHITECTURE.md` — a vision/roadmap document. **No co
 | `orchestrator` | qwen3.7-max | primary (default) | Multi-step tasks, coordination, decomposition |
 | `build` | qwen3.7-max | primary | Complex implementation, heavy code changes |
 | `plan` | qwen3.7-max | primary | Architectural decisions, system design, trade-offs |
-| `explore` | qwen3-vl-32b-instruct | subagent | Codebase exploration, file discovery, pattern search |
+| `explore` | qwen3-coder-flash | subagent | Codebase exploration, file discovery, pattern search |
 | `visual` | qwen3-vl-32b-instruct | subagent | Screenshot review, map rendering debugging, visual QA |
-| `quick` | qwen3-vl-32b-instruct | subagent | Simple edits, refactors, documentation, Q&A |
+| `quick` | qwen3-coder-flash | subagent | Simple edits, refactors, documentation, Q&A |

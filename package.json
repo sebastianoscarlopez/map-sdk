@@ -1,0 +1,26 @@
+{
+  "name": "@netasibas/map-sdk-monorepo",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "lint": "eslint packages/*/src --ext .ts,.tsx",
+    "typecheck": "tsc --noEmit -p packages/core/tsconfig.json",
+    "test": "vitest run",
+    "build": "pnpm -r build",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "eslint": "^9.0.0",
+    "husky": "^9.0.0",
+    "lint-staged": "^15.0.0",
+    "typescript": "^5.5.0",
+    "vitest": "^2.0.0"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "tsc --noEmit"
+    ]
+  },
+  "packageManager": "pnpm@9.0.0"
+}
