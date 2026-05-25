@@ -1,0 +1,19 @@
+wasm-core:
+  - changed-files:
+      - any-glob-to-any-file: 'packages/wasm-core/**'
+
+core:
+  - changed-files:
+      - any-glob-to-any-file: 'packages/core/**'
+
+playground:
+  - changed-files:
+      - any-glob-to-any-file: 'packages/playground/**'
+
+ci:
+  - changed-files:
+      - any-glob-to-any-file: '.github/**'
+
+docs:
+  - changed-files:
+      - any-glob-to-any-file: '**/*.md'

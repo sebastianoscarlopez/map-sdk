@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [main]
 
+env:
+  RUST_VERSION: 1.80.0
+  WASM_PACK_VERSION: 0.12.1
+
 jobs:
   verify:
     runs-on: ubuntu-latest
@@ -21,17 +25,84 @@ jobs:
           node-version: 20
           cache: pnpm
 
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: ${{ env.RUST_VERSION }}
+          targets: wasm32-unknown-unknown
+
+      - name: Install wasm-pack
+        run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
+
+      - name: Cache Rust dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-
+
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Lint
+      - name: Lint (TypeScript)
         run: pnpm lint
+
+      - name: Lint (Rust)
+        run: cargo clippy --workspace --all-targets -- -D warnings
+        working-directory: packages/wasm-core
 
       - name: Typecheck
         run: pnpm typecheck
 
-      - name: Test
+      - name: Test (TypeScript)
         run: pnpm test
 
-      - name: Build
+      - name: Test (Rust)
+        run: cargo test --workspace
+        working-directory: packages/wasm-core
+
+      - name: Build WASM
+        run: wasm-pack build --target web --out-dir ../../packages/core/wasm
+        working-directory: packages/wasm-core
+
+      - name: Build (TypeScript)
         run: pnpm build
+
+  wasm-size:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: ${{ env.RUST_VERSION }}
+          targets: wasm32-unknown-unknown
+
+      - name: Install wasm-pack
+        run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
+
+      - name: Cache Rust dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Build WASM
+        run: wasm-pack build --target web --out-dir pkg
+        working-directory: packages/wasm-core
+
+      - name: Check WASM size
+        run: |
+          WASM_SIZE=$(du -k packages/wasm-core/pkg/*.wasm | awk '{sum += $1} END {print sum}')
+          MAX_SIZE=2048  # 2MB in KB
+          echo "WASM size: ${WASM_SIZE}KB (max: ${MAX_SIZE}KB)"
+          if [ "$WASM_SIZE" -gt "$MAX_SIZE" ]; then
+            echo "Error: WASM size ${WASM_SIZE}KB exceeds limit of ${MAX_SIZE}KB"
+            exit 1
+          fi
