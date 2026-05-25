@@ -1,6 +1,6 @@
 ---
 description: Coordinates multi-step work across specialized agents, breaks down complex tasks, and routes work to the right agent
-model: openrouter/qwen/qwen3.7-max
+model: openrouter/qwen/qwen3.6-plus
 mode: primary
 ---
 

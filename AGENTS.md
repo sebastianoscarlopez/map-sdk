@@ -38,7 +38,7 @@ If any step fails, fix the issue before proceeding. Never declare a task complet
 
 | Agent | Model | Mode | Use for |
 |-------|-------|------|---------|
-| `orchestrator` | qwen3.7-max | primary (default) | Multi-step tasks, coordination, decomposition |
+| `orchestrator` | qwen3.6-plus | primary (default) | Multi-step tasks, coordination, decomposition |
 | `build` | qwen3.7-max | primary | Complex implementation, heavy code changes |
 | `plan` | qwen3.7-max | primary | Architectural decisions, system design, trade-offs |
 | `explore` | qwen3-coder-flash | subagent | Codebase exploration, file discovery, pattern search |
