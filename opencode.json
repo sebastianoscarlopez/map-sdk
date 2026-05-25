@@ -1,0 +1,33 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "qwen/qwen3.7-max",
+  "small_model": "qwen/qwen3-vl-32b-instruct",
+  "default_agent": "orchestrator",
+  "instructions": ["AGENTS.md"],
+  "agent": {
+    "build": {
+      "model": "qwen/qwen3.7-max",
+      "description": "Handles complex implementation tasks"
+    },
+    "plan": {
+      "model": "qwen/qwen3.7-max",
+      "description": "Handles architectural planning and complex decision making"
+    },
+    "explore": {
+      "model": "qwen/qwen3-vl-32b-instruct",
+      "description": "Handles codebase exploration and navigation tasks"
+    },
+    "visual": {
+      "model": "qwen/qwen3-vl-32b-instruct",
+      "description": "Handles visual tasks like reviewing playground screenshots and debugging map rendering"
+    },
+    "quick": {
+      "model": "qwen/qwen3-vl-32b-instruct",
+      "description": "Handles simple edits, refactors, and Q&A tasks"
+    },
+    "orchestrator": {
+      "model": "qwen/qwen3.7-max",
+      "description": "Coordinates multi-step work across specialized agents, breaks down complex tasks, and routes work to the right agent"
+    }
+  }
+}
